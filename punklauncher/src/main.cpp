@@ -12,17 +12,16 @@
 
 #include <LayerShellQt/Window>
 
-#include "modules/AppBackend.h"
+// #include "modules/AppBackend.h"
+#include "core/Backend.hpp"
 #include "modules/IconProvider.h"
 
 int main(int argc, char *argv[])
 {
-    setbuf(stdout, NULL);
-    setbuf(stderr, NULL);
     QApplication app(argc, argv);
     QQmlApplicationEngine engine;
 
-    AppBackend backend;
+    Backend backend;
 
     engine.rootContext()->setContextProperty("backend", &backend);
     engine.addImageProvider("appicon", new IconProvider);

@@ -1,0 +1,12 @@
+[
+    {
+        "name" : "DEAUTHENTICATE",
+        "icon" : "",
+        "exec" : "loginctl lock-session"
+    },
+    {
+        "name" : "fastfetch",
+        "icon" : "",
+        "exec" : "fastfetch"
+    }
+]

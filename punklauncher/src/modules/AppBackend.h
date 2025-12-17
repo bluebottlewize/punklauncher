@@ -13,7 +13,6 @@
 
 #include "UsageRanker.h"
 
-// Helper class to handle App Logic
 class AppBackend : public QObject {
     Q_OBJECT
 public:

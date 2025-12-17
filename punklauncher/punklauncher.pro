@@ -13,13 +13,25 @@ CONFIG += console
 LIBS += -lLayerShellQtInterface
 
 SOURCES += \
+    src/core/Backend.cpp \
     src/main.cpp \
-    src/modules/LoadApplications.cpp
+    src/modules/AliasProvider.cpp \
+    src/modules/AppProvider.cpp \
+    src/modules/ListProvider.cpp \
+ \    # src/modules/LoadApplications.cpp
+    src/modules/Ranker.cpp \
+    src/modules/WindowProvider.cpp
 
 HEADERS += \
+    src/core/Backend.hpp \
+    src/modules/AliasProvider.hpp \
+    src/modules/AppProvider.hpp \
     src/modules/IconProvider.h \
-    src/modules/AppBackend.h \
-    src/modules/UsageRanker.h
+    # src/modules/AppBackend.h \
+    src/modules/ListProvider.hpp \
+ \    # src/modules/UsageRanker.h
+    src/modules/Ranker.hpp \
+    src/modules/WindowProvider.hpp
 
 RESOURCES += \
     resources.qrc
@@ -28,3 +40,6 @@ RESOURCES += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES += \
+    assets/config.json

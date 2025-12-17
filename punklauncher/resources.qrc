@@ -8,5 +8,8 @@
         <file>assets/launcher_text_box_cursor.png</file>
         <file>assets/list_item.png</file>
         <file>assets/list_item_active.png</file>
+        <file>assets/list_item_green.png</file>
+        <file>assets/list_item_active_green.png</file>
+        <file>assets/config.json</file>
     </qresource>
 </RCC>

@@ -209,8 +209,9 @@ Window {
 
 					Layout.margins: 10
 
-					onRequestLaunch: (name, cmd, queryText) => {
-										 backend.launchApp(name, cmd, queryText)
+					onRequestLaunch: (name, cmd, queryText, type) => {
+										 backend.execute(name, cmd,
+														 queryText, type)
 										 exitSequence.start()
 									 }
 				}
@@ -314,7 +315,7 @@ Window {
 				property: "opacity"
 				from: 0.6
 				to: 0
-				duration: 200
+				duration: 300
 			}
 
 			// 3. THE END: Kill the C++ Process

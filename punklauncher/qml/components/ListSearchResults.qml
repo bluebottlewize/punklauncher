@@ -49,11 +49,11 @@ ListView {
 	function launchCurrentItem() {
 		if (count > 0 && currentIndex >= 0) {
 			var item = appModel.get(currentIndex)
-			requestLaunch(item.name, item.exec, currentQuery)
+			requestLaunch(item.name, item.exec, currentQuery, item.type)
 		}
 	}
 
-	signal requestLaunch(string name, string cmd, string queryText)
+	signal requestLaunch(string name, string cmd, string queryText, string type)
 
 	model: ListModel {
 		id: appModel
@@ -168,6 +168,6 @@ ListView {
 		}
 
 		onClicked: rootList.requestLaunch(model.name, model.exec,
-										  rootList.currentQuery)
+										  rootList.currentQuery, model.type)
 	}
 }
