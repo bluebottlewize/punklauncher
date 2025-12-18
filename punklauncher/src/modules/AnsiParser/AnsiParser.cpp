@@ -94,7 +94,7 @@ void AnsiParser::handleColorCode(int code) {
 }
 
 QString AnsiParser::formattedText() const {
-    QString html = "<html><body style='white-space: pre; font-family: monospace; color: white;'>";
+    QString html = "<html><body style='white-space: pre;'>";
 
     for (int y = 0; y < m_rows; ++y) {
         QString lineHtml = "";

@@ -98,21 +98,6 @@ ListView {
 			anchors.bottomMargin: 4
 		}
 
-		// background: Image {
-		//     radius: 5
-
-		//     // We only check 'highlighted' because hover now forces highlight!
-		//     color: delegateItem.ListView.isCurrentItem ? "#ff0055" : "transparent"
-
-		//     border.color: delegateItem.ListView.isCurrentItem ? "#ff0055" : "transparent"
-		//     border.width: 1
-
-		//     // Behavior on color {
-		//     //     ColorAnimation {
-		//     //         duration: 50
-		//     //     }
-		//     // } // Fast transition
-		// }
 		RowLayout {
 			anchors.fill: parent
 			anchors.margins: 5
@@ -161,6 +146,7 @@ ListView {
 			Text {
 				text: model.name
 				font.family: "Monospace"
+				font.styleName: "Medium"
 				color: "#998EFF"
 				font.pixelSize: 20
 				Layout.fillWidth: true

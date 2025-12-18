@@ -102,9 +102,10 @@ Window {
 					Layout.bottomMargin: 0
 					// placeholderText: "Search applications..."
 					placeholderTextColor: "#8341FF"
-					font.family: "Monospace"
+					font.family: "Rajdhani"
+					font.styleName: "Medium"
 
-					font.pixelSize: 30
+					font.pixelSize: 36
 					color: "#8341FF"
 
 					cursorDelegate: Item {
@@ -219,16 +220,20 @@ Window {
 										 if (type !== "alias") {
 											 exitSequence.start()
 										 }
+										 headerText.text = name
 									 }
 				}
 			}
 
-			ColumnLayout {
+			Item {
 				id: resultsView
-				width: 763
-				height: parent.height
 				opacity: contentArea.viewState === "results" ? 1 : 0
 				visible: opacity > 0
+
+				anchors.fill: parent
+				anchors.margins: 20
+				anchors.leftMargin: 14
+				anchors.bottomMargin: 0
 
 				Behavior on opacity {
 					NumberAnimation {
@@ -242,19 +247,18 @@ Window {
 
 					// Ensure the image scales nicely if the text is long
 					fillMode: Image.Stretch
-					Layout.fillWidth: true
-					Layout.preferredHeight: searchInput.height
-
-					Layout.margins: 20
-					Layout.leftMargin: 14
-					Layout.bottomMargin: 0
+					anchors {
+						top: parent.top
+						left: parent.left
+						right: parent.right
+					}
 
 					Text {
 						id: headerText
-						text: searchInput.text
 						color: "#0C1241"
-						font.pixelSize: 30
-						font.family: "Monospace"
+						font.family: "Rajdhani"
+						font.styleName: "Medium"
+						font.pixelSize: 36
 						leftPadding: 20
 						anchors.verticalCenter: parent.verticalCenter
 					}
@@ -262,13 +266,37 @@ Window {
 
 				ScrollView {
 					Layout.fillWidth: true
-					Layout.fillHeight: true
-					Layout.margins: 20
-					Layout.leftMargin: 14
-					Layout.topMargin: 0
-					Layout.bottomMargin: 14
 
+					// Layout.fillHeight: true
+					anchors {
+						top: titleBackground.bottom
+						left: parent.left
+						right: parent.right
+						bottom: parent.bottom
+						bottomMargin: resultsView.height - titleBackground.height
+					}
+
+					height: 0
 					clip: true
+
+					ScrollBar.vertical.policy: ScrollBar.AlwaysOff
+					ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+
+					onHeightChanged: {
+						outputText.update()
+					}
+
+					id: resultScroll
+
+					NumberAnimation on anchors.bottomMargin {
+						from: resultsView.height - titleBackground.height
+						to: 14
+						id: openAnimation
+						duration: 500
+						easing.type: Easing.OutQuart
+						running: false
+					}
+
 					background: Image {
 						source: "qrc:/assets/launcher_text_area.png"
 					}
@@ -282,6 +310,7 @@ Window {
 						function onLastOutputChanged() {
 							// We call the void function to update the internal matrix
 							parser.parse(backend.lastOutput)
+							openAnimation.start()
 						}
 					}
 
@@ -292,10 +321,14 @@ Window {
 							   && backend.lastOutput) ? parser.formattedText : ""
 						// color: "white"
 						textFormat: Text.RichText
-						font.family: "Monospace"
+						font.family: "Space Mono"
 						font.pixelSize: 14
 						background: null
 						wrapMode: TextEdit.NoWrap
+
+						onContentHeightChanged: {
+							resultScroll.contentHeight = contentHeight
+						}
 					}
 				}
 			}
