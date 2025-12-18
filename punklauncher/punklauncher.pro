@@ -6,6 +6,8 @@ CONFIG += c++17
 CONFIG += debug
 CONFIG += console
 
+include(qmltermwidget/lib.pri)
+
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
@@ -16,6 +18,7 @@ SOURCES += \
     src/core/Backend.cpp \
     src/main.cpp \
     src/modules/AliasProvider.cpp \
+    src/modules/AnsiParser/AnsiParser.cpp \
     src/modules/AppProvider.cpp \
     src/modules/ListProvider.cpp \
  \    # src/modules/LoadApplications.cpp
@@ -25,6 +28,7 @@ SOURCES += \
 HEADERS += \
     src/core/Backend.hpp \
     src/modules/AliasProvider.hpp \
+    src/modules/AnsiParser/AnsiParser.hpp \
     src/modules/AppProvider.hpp \
     src/modules/IconProvider.h \
     # src/modules/AppBackend.h \

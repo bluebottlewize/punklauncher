@@ -11,5 +11,7 @@
         <file>assets/list_item_green.png</file>
         <file>assets/list_item_active_green.png</file>
         <file>assets/config.json</file>
+        <file>assets/launcher_text_area.png</file>
+        <file>assets/launcher_text_box_disabled.png</file>
     </qresource>
 </RCC>

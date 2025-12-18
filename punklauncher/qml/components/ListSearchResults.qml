@@ -125,8 +125,8 @@ ListView {
 				// A. The Fallback: A colored box with the first letter
 				Rectangle {
 					anchors.fill: parent
-					color: "#333333" // Dark grey background
-					radius: 5
+					color: "transparent" // Dark grey background
+					// border.color: "#8341FF"
 
 					// Only show this box if the real image Failed or is Null
 					visible: realIcon.status !== Image.Ready
@@ -135,9 +135,9 @@ ListView {
 						anchors.centerIn: parent
 						text: model.name ? model.name.charAt(
 											   0).toUpperCase() : "?"
-						color: "#aaaaaa"
+						color: "#8341FF"
 						font.bold: true
-						font.pixelSize: 18
+						font.pixelSize: 20
 					}
 				}
 

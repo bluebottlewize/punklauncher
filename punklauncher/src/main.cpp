@@ -15,6 +15,7 @@
 // #include "modules/AppBackend.h"
 #include "core/Backend.hpp"
 #include "modules/IconProvider.h"
+#include "modules/AnsiParser/AnsiParser.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -25,6 +26,8 @@ int main(int argc, char *argv[])
 
     engine.rootContext()->setContextProperty("backend", &backend);
     engine.addImageProvider("appicon", new IconProvider);
+
+    qmlRegisterType<AnsiParser>("TerminalTools", 1, 0, "AnsiParser");
 
     const QUrl url(QStringLiteral("qrc:/qml/Main.qml"));
 

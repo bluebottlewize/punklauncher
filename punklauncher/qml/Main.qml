@@ -3,6 +3,7 @@ import QtQuick.Controls
 import QtQuick.Layouts
 
 import "components"
+import TerminalTools 1.0
 
 Window {
 	id: root
@@ -65,6 +66,7 @@ Window {
 			width: 0
 			clip: true
 			color: "transparent"
+			property string viewState: "searching"
 
 			// This forces the GPU to render this entire box as a texture during animation.
 			// It prevents the "stutter" caused by the layout engine waking up at the end.
@@ -86,6 +88,7 @@ Window {
 				y: 0
 				width: 763 // Fixed width of the final content
 				height: parent.height
+				opacity: contentArea.viewState === "searching" ? 1 : 0
 
 				anchors.margins: 0
 				spacing: 0
@@ -172,6 +175,7 @@ Window {
 
 					onAccepted: {
 						appView.launchCurrentItem()
+						contentArea.viewState = "results"
 					}
 
 					Keys.onPressed: event => {
@@ -212,8 +216,87 @@ Window {
 					onRequestLaunch: (name, cmd, queryText, type) => {
 										 backend.execute(name, cmd,
 														 queryText, type)
-										 exitSequence.start()
+										 if (type !== "alias") {
+											 exitSequence.start()
+										 }
 									 }
+				}
+			}
+
+			ColumnLayout {
+				id: resultsView
+				width: 763
+				height: parent.height
+				opacity: contentArea.viewState === "results" ? 1 : 0
+				visible: opacity > 0
+
+				Behavior on opacity {
+					NumberAnimation {
+						duration: 200
+					}
+				}
+
+				Image {
+					id: titleBackground
+					source: "qrc:/assets/launcher_text_box_disabled.png" // Using your existing asset
+
+					// Ensure the image scales nicely if the text is long
+					fillMode: Image.Stretch
+					Layout.fillWidth: true
+					Layout.preferredHeight: searchInput.height
+
+					Layout.margins: 20
+					Layout.leftMargin: 14
+					Layout.bottomMargin: 0
+
+					Text {
+						id: headerText
+						text: searchInput.text
+						color: "#0C1241"
+						font.pixelSize: 30
+						font.family: "Monospace"
+						leftPadding: 20
+						anchors.verticalCenter: parent.verticalCenter
+					}
+				}
+
+				ScrollView {
+					Layout.fillWidth: true
+					Layout.fillHeight: true
+					Layout.margins: 20
+					Layout.leftMargin: 14
+					Layout.topMargin: 0
+					Layout.bottomMargin: 14
+
+					clip: true
+					background: Image {
+						source: "qrc:/assets/launcher_text_area.png"
+					}
+
+					AnsiParser {
+						id: parser
+					}
+
+					Connections {
+						target: backend
+						function onLastOutputChanged() {
+							// We call the void function to update the internal matrix
+							parser.parse(backend.lastOutput)
+						}
+					}
+
+					TextArea {
+						id: outputText
+						readOnly: true
+						text: (backend
+							   && backend.lastOutput) ? parser.formattedText : ""
+						// color: "white"
+						textFormat: Text.RichText
+						font.family: "Monospace"
+						font.pixelSize: 14
+						background: null
+						wrapMode: TextEdit.NoWrap
+					}
 				}
 			}
 		}
